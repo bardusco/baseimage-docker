@@ -15,15 +15,20 @@ chmod 600 /etc/container_environment.sh /etc/container_environment.json
 ## Install runit.
 $minimal_apt_get_install runit
 
-## Install a syslog daemon.
-$minimal_apt_get_install syslog-ng-core
-mkdir /etc/service/syslog-ng
-cp /build/runit/syslog-ng /etc/service/syslog-ng/run
-mkdir -p /var/lib/syslog-ng
-cp /build/config/syslog_ng_default /etc/default/syslog-ng
+# install python2 # TODO: migrate my_init to python3
+#$minimal_apt_get_install python2.7
+#ln -s /usr/bin/python2.7 /usr/bin/python2
 
-## Install logrotate.
-$minimal_apt_get_install logrotate
+## Install a syslog daemon.
+#$minimal_apt_get_install syslog-ng-core
+#mkdir /etc/service/syslog-ng
+#cp /build/runit/syslog-ng /etc/service/syslog-ng/run
+#mkdir -p /var/lib/syslog-ng
+#cp /build/config/syslog_ng_default /etc/default/syslog-ng
+
+## start a rsyslog daemon since syslog-ng ins't working with docker 0.10
+mkdir /etc/service/rsyslog
+cp /build/runit/rsyslog /etc/service/rsyslog/run
 
 ## Install the SSH server.
 $minimal_apt_get_install openssh-server
@@ -44,10 +49,10 @@ chown root:root /etc/insecure_key*
 cp /build/enable_insecure_key /usr/sbin/
 
 ## Install cron daemon.
-$minimal_apt_get_install cron
-mkdir /etc/service/cron
-cp /build/runit/cron /etc/service/cron/run
+#$minimal_apt_get_install cron
+#mkdir /etc/service/cron
+#cp /build/runit/cron /etc/service/cron/run
 
 ## Remove useless cron entries.
 # Checks for lost+found and scans for mtab.
-rm -f /etc/cron.daily/standard
+#rm -f /etc/cron.daily/standard

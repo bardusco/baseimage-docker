@@ -1,13 +1,13 @@
 FROM ubuntu:12.04
-MAINTAINER Phusion <info@phusion.nl>
+MAINTAINER Danilo Bardusco <bardusco@gmail.com>
 
 ENV HOME /root
 RUN mkdir /build
 ADD . /build
 
-RUN /build/prepare.sh && \
-	/build/system_services.sh && \
-	/build/utilities.sh && \
-	/build/cleanup.sh
+RUN /build/prepare.sh
+RUN	/build/system_services.sh
+RUN	/build/utilities.sh
+RUN	/build/cleanup.sh
 
 CMD ["/sbin/my_init"]
