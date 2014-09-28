@@ -1,4 +1,4 @@
-NAME = phusion/baseimage
+NAME = bardusco/baseimage
 VERSION = 0.9.10
 
 .PHONY: all build test tag_latest release ssh
